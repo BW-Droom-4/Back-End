@@ -1,6 +1,8 @@
-import Joi from '@hapi/joi';
+const { Joi } = require('@hapi/joi');
 
-export const registerUserValidation = data => {
+module.export = {
+
+  registerUserValidation: data => {
   const schema = Joi.object({
     firstname: Joi.string()
       .max(64)
@@ -18,9 +20,12 @@ export const registerUserValidation = data => {
       .required(),
   });
   return schema.validate(data);
+  }
 };
 
-export const loginUserValidation = data => {
+
+module.export = {
+ loginUserValidation: data => {
   const schema = Joi.object({
     email: Joi.string()
       .min(6)
@@ -32,4 +37,4 @@ export const loginUserValidation = data => {
       .required()
   });
   return schema.validate(data);
-};
+}};

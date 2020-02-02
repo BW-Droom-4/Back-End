@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Users = require('../helpers/user-model');
 const {jwtSecret} = require('../config/tokens');
-const { registerUserValidation, loginUserValidation } = require('./userValidation');
+const { registerUserValidation, loginUserValidation } = require('./validation/userValidation.js');
 
 
 router.post('/register', async (req, res) => {
@@ -17,7 +17,7 @@ router.post('/register', async (req, res) => {
     res.status(422).json({ error: message });
   }
 
-  let user = req.body
+  const user = req.body
   const { firstname, lastname, email, password } = user
 
   try {
@@ -52,7 +52,7 @@ router.post('/login', async(req, res) => {
   }
 
 
-  let { firstname, email, password } = req.body;
+  const { firstname, email, password } = req.body;
 
   try {
     // step 2 - check if user exists in our database

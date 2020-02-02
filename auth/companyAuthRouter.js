@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Companies = require('../helpers/company-model');
 const {jwtSecret} = require('../config/tokens');
-const { registerCompanyValidation, loginCompanyValidation } = require('./companyValidation');
+const { registerCompanyValidation, loginCompanyValidation } = require('./validation/companyValidation.js');
 
 
 router.post('/register', async (req, res) => {
@@ -17,7 +17,7 @@ router.post('/register', async (req, res) => {
     res.status(422).json({ error: message });
   }
 
-  let company = req.body
+  const company = req.body
   const { companyName, email, password } = company
 
   try {
@@ -52,7 +52,7 @@ router.post('/login', async(req, res) => {
   }
 
 
-  let { companyName, email, password } = req.body;
+  const { companyName, email, password } = req.body;
 
   try {
     // step 2 - check if company exists in our database

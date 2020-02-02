@@ -19,10 +19,10 @@ function getUserImage() {
     return db('userimages');
 }
 
-const getUserImageById = async id => (
-    await db('userimages')
+function getUserImageById(id) {
+    return db('userimages')
     .where('id', id)
-)[0]
+}[0]
 
 function insertUserImage(userimage) {
     return db('userimages')
@@ -44,10 +44,10 @@ function getCompanyImage() {
     return db('companyimages');
 }
 
-const getCompanyImageById = async id => (
-    await db('companyimages')
+function getCompanyImageById(id) {
+    return db('companyimages')
     .where('id', id)
-)[0]
+}[0]
 
 function insertCompanyImage(companyimage) {
     return db('companyimages')

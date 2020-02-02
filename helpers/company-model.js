@@ -25,15 +25,15 @@ function findBy(filter) {
     return db('companies').where(filter);
 }
 
-const getCompanyById = async id => {
+function getCompanyById(id) {
     const company = (
-        await db('companies')
+        db('companies')
         .select('*')
         .where('id', id)
     )[0]
     companyDetail = {
         ...user,
-        images: await db('companyimages')
+        images: db('companyimages')
         .select('id', 'company_image')
         .where('company_id', id)
     }
@@ -41,16 +41,16 @@ const getCompanyById = async id => {
 }
 
   
-const getCompanyProfile = async id => {
+function getCompanyProfile(id) {
     const profile = (
-        await db('companies as c')
+        db('companies as c')
         .join('companyprofiles as cp', 'cp.company_id', 'c.id')
         .select('c.id', 'cp.sector', 'cp.about_company')
         .where('c.id', id)
     )[0]
     profileDetail = {
         ...profile,
-        joblistings: await db('joblistings')
+        joblistings: db('joblistings')
         .select('id', 'job_title', 'expiry_date', 'job_detail', 'matching_skill')
         .where('company_id', id),
     }
@@ -84,10 +84,10 @@ function getJobListing() {
     return db('joblistings');
 }
 
-const getJobListingById = async id => (
-    await db('joblistings')
+function getJobListingById(id) {
+    return db('joblistings')
     .where('id', id)
-)[0]
+}[0]
 
 function insertJobListing(joblisting) {
     return db('joblistings')
@@ -97,11 +97,11 @@ function insertJobListing(joblisting) {
       });
 }
 
-const updateJobListing = async (id, joblisting) => (
-    await db('joblistings')
+function updateJobListing(id, joblisting) {
+    return db('joblistings')
     .where('id', id)
     .update(joblisting)
-)[0]
+}[0]
 
     
 function removeJobListing(id) {

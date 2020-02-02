@@ -21,10 +21,10 @@ function getUserProfile() {
     return db('userprofiles');
 }
 
-const getUserProfileById = async id => (
-    await db('userprofiles')
+function getUserProfileById(id) {
+    return db('userprofiles')
     .where('id', id)
-)[0]
+}[0]
 
 function insertUserProfile(userprofile) {
     return db('userprofiles')
@@ -34,11 +34,11 @@ function insertUserProfile(userprofile) {
       });
 }
 
-const updateUserProfile = async (id, userprofile) => (
-    await db('userprofiles')
+function updateUserProfile(id, userprofile) {
+    return db('userprofiles')
     .where('id', id)
     .update(userprofile)
-)[0]
+}[0]
 
     
 function removeUserProfile(id) {
@@ -53,10 +53,10 @@ function getCompanyProfile() {
     return db('companyprofiles');
 }
 
-const getCompanyProfileById = async id => (
-    await db('companyprofiles')
+function getCompanyProfileById(id) {
+    return db('companyprofiles')
     .where('id', id)
-)[0]
+}[0]
 
 function insertCompanyProfile(companyprofile) {
     return db('companyprofiles')
@@ -66,11 +66,11 @@ function insertCompanyProfile(companyprofile) {
     });
 }
 
-const updateCompanyProfile = async (id, companyprofile) => (
-    await db('companyprofiles')
+function updateCompanyProfile(id, companyprofile) {
+    return db('companyprofiles')
     .where('id', id)
     .update(companyprofile)
-)[0]
+}[0]
   
 function removeCompanyProfile(id) {
     return db('companyprofiles')
