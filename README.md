@@ -31,7 +31,7 @@
 | POST   | /api/auth/companies/register              | Register new company          |      [x]      |
 | POST   | /api/auth/companies/login                 | Log in company                |      [x]      |
 | POST   | /api/companies/:id/joblisting             | Add joblisting of company     |      [x]      |
-| POST   | /api/companies/:id/profile                | Add profile detail of user    |      [x]      |
+| POST   | /api/companies/:id/profile                | Add profile detail of company |      [x]      |
 | POST   | /api/companies/:id/upload                 | Upload a company image        |      [x]      |
 | PUT    | /api/companies/:id                        | Update company by id          |      [x]      |
 | PUT    | /api/companies/:company_id/joblisting/:id | Update joblisting by id       |      [x]      |
