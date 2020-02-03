@@ -2,7 +2,7 @@
 
 > https://droom-4.herokuapp.com/
 
-**BREAKING CHANGE** 
+**BREAKING NEWS: Refresh frequently to get up-to-date 😀😂👌** 
 
 * List of API detail. Note: Some of the routes are in progress!!!!
 
