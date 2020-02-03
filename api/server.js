@@ -14,11 +14,14 @@ server.use(helmet());
 server.use(cors());
 server.use(express.json());
 
-server.use('/', <h1>Welcome to Droom API.</h1>)
+
 server.use('/api/auth/users', userAuthRoute);
 server.use('/api/auth/companies', companyAuthRoute);
 server.use('/api/users' ,authenticate, userRoute);
 server.use('/api/companies', authenticate, companyRoute);
 
+server.use('/', (req, res) => {
+    res.send(`<h2>Welcome to Droom-4 API.!</h2>`);
+});
 
 module.exports = server;
