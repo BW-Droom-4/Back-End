@@ -14,6 +14,7 @@ server.use(helmet());
 server.use(cors());
 server.use(express.json());
 
+server.use('/', <h1>Welcome to Droom API.</h1>)
 server.use('/api/auth/users', userAuthRoute);
 server.use('/api/auth/companies', companyAuthRoute);
 server.use('/api/users' ,authenticate, userRoute);
