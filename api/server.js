@@ -21,7 +21,7 @@ server.use('/api/users' ,authenticate, userRoute);
 server.use('/api/companies', authenticate, companyRoute);
 
 server.use('/', (req, res) => {
-    res.send(`<h2>Welcome to Droom-4 API.!</h2>`);
+    res.send(`<h2>Welcome to Droom-4 API. Register to get access!</h2>`);
 });
 
 module.exports = server;
