@@ -2,7 +2,7 @@
 
 > https://droom-4.herokuapp.com/
 
-**BREAKING NEWS: Refresh frequently to get up-to-date 😀😂👌** 
+**BREAKING NEWS: Check-in frequently to get up-to-date...😀😂** 
 
 * List of API detail. Note: Some of the routes are in progress!!!!
 
@@ -44,7 +44,7 @@
 ```
 headers: {
   'Content-Type': 'application/json',
-  Authorization: token,
+   Authorization: token,
 }
 ```
 
