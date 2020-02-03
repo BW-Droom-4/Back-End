@@ -12,8 +12,8 @@
 | GET    | /api/users/                               | Get all users                 |      [x]      |
 | GET    | /api/users/:id                            | Get user by id                |      [x]      |
 | GET    | /api/users/:id/profile                    | Get user's profile by id      |      [x]      |
-| POST   | /api/auth/users/register                  | Register new user             |      [x]      |
-| POST   | /api/auth/users/login                     | Log in user                   |      [x]      |
+| POST   | /api/auth/users/register                  | Register new user             |      [ ]      |
+| POST   | /api/auth/users/login                     | Log in user                   |      [ ]      |
 | POST   | /api/users/:id/experience                 | Add experience of user        |      [x]      |
 | POST   | /api/users/:id/interest                   | Add interest of user          |      [x]      |
 | POST   | /api/users/:id/profile                    | Add profile detail of user    |      [x]      |
@@ -28,8 +28,8 @@
 | GET    | /api/companies/                           | Get all companies             |      [x]      |
 | GET    | /api/companies/:id                        | Get company by id             |      [x]      |
 | GET    | /api/companies/:id/profile                | Get company's profile by id   |      [x]      |
-| POST   | /api/auth/companies/register              | Register new company          |      [x]      |
-| POST   | /api/auth/companies/login                 | Log in company                |      [x]      |
+| POST   | /api/auth/companies/register              | Register new company          |      [ ]      |
+| POST   | /api/auth/companies/login                 | Log in company                |      [ ]      |
 | POST   | /api/companies/:id/joblisting             | Add joblisting of company     |      [x]      |
 | POST   | /api/companies/:id/profile                | Add profile detail of company |      [x]      |
 | POST   | /api/companies/:id/upload                 | Upload a company image        |      [x]      |
