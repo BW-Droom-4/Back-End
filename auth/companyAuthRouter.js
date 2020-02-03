@@ -3,28 +3,20 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Companies = require('../helpers/company-model');
 const {jwtSecret} = require('../config/tokens');
-const { registerCompanyValidation, loginCompanyValidation } = require('./validation/companyValidation.js');
 
 
 router.post('/register', async (req, res) => {
   // implement registration
 
   //step 1 - validate company before creating
-  const { error } = registerCompanyValidation(req.body);
-  if (error) {
-    const { details } = error;
-    const message = details.map(detail => detail.message).join(',');
-    res.status(422).json({ error: message });
-  }
-
   const company = req.body
   const { companyName, email, password } = company
 
   try {
     // step 2 - check if company already exists
-        const companyExist = await Companies.findBy({ email }).first();
-        if (companyExist)
-        return res.status(400).json({ message: `Company, with this email: ${email}, is already registered.` });
+        // const companyExist = await Companies.findBy({ email }).first();
+        // if (companyExist)
+        // return res.status(400).json({ message: `Company, with this email: ${email}, is already registered.` });
 
     // step 3 - create new company and hash password
         const hash = await bcrypt.hashSync(company.password, 10);
@@ -44,27 +36,20 @@ router.post('/login', async(req, res) => {
   // implement login
   
   //step 1 - validate company before logging in
-  const { error } = loginCompanyValidation(req.body);
-  if (error) {
-    const { details } = error;
-    const message = details.map(detail => detail.message).join(',');
-    res.status(422).json({ error: message });
-  }
-
 
   const { companyName, email, password } = req.body;
 
   try {
     // step 2 - check if company exists in our database
 
-    const companyExists = await Companies.findBy({ email }).first();
-    if (!companyExists) 
-        return res.status(400).json({ message: "Company with this email does not exist in our database." });
+    // const companyExists = await Companies.findBy({ email }).first();
+    // if (!companyExists) 
+    //     return res.status(400).json({ message: "Company with this email does not exist in our database." });
 
-    const company = await Companies.getCompany({email}).first()
+    const company = await Companies.findBy({email}).first()
         if (company && bcrypt.compareSync(password, company.password)) {
             const token = signToken(company)
-            res.status(200).json({message: `Hi ${companyName}, Welcome to Droom!. Your token is ${token}`})
+            res.status(200).json({message: `Hi ${company.companyName}, Welcome to Droom!. Your token is ${token}`})
         } 
         else {
             res.status(401).json({message: 'Invalid credentials. Password did not match our records.'})

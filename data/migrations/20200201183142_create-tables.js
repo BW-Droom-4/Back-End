@@ -13,7 +13,7 @@ exports.up = function(knex) {
            .notNullable();
         tbl.string('role')
            .defaultTo('Job Seeker')
-        tbl.timestamps({useTimestamps: true}, {defaultToNow: true})
+        tbl.timestamps({useTimestamps: true}, {defaultToNow: false})
     })
     .createTable('userimages', tbl => {
         tbl.increments('id');

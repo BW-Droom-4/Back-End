@@ -1,7 +1,6 @@
 const { Joi } = require('@hapi/joi');
 
 module.export = {
-
   registerUserValidation: data => {
   const schema = Joi.object({
     firstname: Joi.string()

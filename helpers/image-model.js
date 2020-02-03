@@ -27,9 +27,6 @@ function getUserImageById(id) {
 function insertUserImage(userimage) {
     return db('userimages')
       .insert(userimage)
-      .then(ids => {
-        return getById(ids[0]);
-      });
   }
     
   function removeUserImage(id) {
@@ -52,9 +49,6 @@ function getCompanyImageById(id) {
 function insertCompanyImage(companyimage) {
     return db('companyimages')
     .insert(companyimage)
-    .then(ids => {
-        return getById(ids[0]);
-    });
 }
   
 function removeCompanyImage(id) {

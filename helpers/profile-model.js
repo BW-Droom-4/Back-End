@@ -29,9 +29,6 @@ function getUserProfileById(id) {
 function insertUserProfile(userprofile) {
     return db('userprofiles')
       .insert(userprofile)
-      .then(ids => {
-        return getById(ids[0]);
-      });
 }
 
 function updateUserProfile(id, userprofile) {
@@ -61,9 +58,6 @@ function getCompanyProfileById(id) {
 function insertCompanyProfile(companyprofile) {
     return db('companyprofiles')
     .insert(companyprofile)
-    .then(ids => {
-        return getById(ids[0]);
-    });
 }
 
 function updateCompanyProfile(id, companyprofile) {

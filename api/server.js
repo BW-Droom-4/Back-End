@@ -16,7 +16,7 @@ server.use(express.json());
 
 server.use('/api/auth/users', userAuthRoute);
 server.use('/api/auth/companies', companyAuthRoute);
-server.use('/api/users', authenticate ,userRoute);
+server.use('/api/users' ,authenticate, userRoute);
 server.use('/api/companies', authenticate, companyRoute);
 
 
