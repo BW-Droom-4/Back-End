@@ -17,7 +17,7 @@
 | POST   | /api/users/:id/experience                 | Add experience of user        |      [x]      |
 | POST   | /api/users/:id/interest                   | Add interest of user          |      [x]      |
 | POST   | /api/users/:id/profile                    | Add profile detail of user    |      [x]      |
-| POST   | /api/users/:id/upload                     | Upload an user image          |      [x]      |
+| POST** | /api/users/:id/upload                     | Upload an user image          |      [x]      |
 | PUT    | /api/users/:id                            | Update user by id             |      [x]      |
 | PUT    | /api/users/:user_id/experience/:id        | Update user experience by id  |      [x]      |
 | PUT    | /api/users/:user_id/interest/:id          | Update user interest by id    |      [x]      |
@@ -33,11 +33,11 @@
 | POST   | /api/companies/:id/joblisting             | Add joblisting of company     |      [x]      |
 | POST   | /api/companies/:id/profile                | Add profile detail of user    |      [x]      |
 | POST   | /api/companies/:id/upload                 | Upload a company image        |      [x]      |
-| PUT    | /api/companies/:id                        | Update user by id             |      [x]      |
-| PUT    | /api/companies/:company_id/joblisting/:id | Update user interest by id    |      [x]      |
-| PUT    | /api/companies/:company_id/profile/:id    | Update user profile           |      [x]      |
-| DELETE | /api/companies/:id                        | Remove user by id             |      [x]      |
-| DELETE | /api/companies/:company_id/joblisting/:id | Remove user experience by id  |      [x]      | 
+| PUT    | /api/companies/:id                        | Update company by id          |      [x]      |
+| PUT    | /api/companies/:company_id/joblisting/:id | Update joblisting by id       |      [x]      |
+| PUT    | /api/companies/:company_id/profile/:id    | Update company profile        |      [x]      |
+| DELETE | /api/companies/:id                        | Remove company by id          |      [x]      |
+| DELETE | /api/companies/:company_id/joblisting/:id | Remove job listing by id      |      [x]      | 
 
 > Login needs Authorization Header
 
