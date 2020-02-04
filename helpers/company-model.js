@@ -42,14 +42,16 @@ async function getCompanyById(id) {
 
   
 async function getCompanyProfile(id) {
-    const profile = await (
-        db('companies as c')
-        .join('companyprofiles as cp', 'cp.company_id', 'c.id')
-        .select('c.id', 'cp.sector', 'cp.about_company')
-        .where('c.id', id)
+    const company = await (
+        db('companies')
+        .select('*')
+        .where('id', id)
     )
     profileDetail = {
-        ...profile,
+        ...company,
+        profiles: await db('companyprofiles')
+        .select('id','sector','about_company')
+        .where('company_id', id),
         joblistings: await db('joblistings')
         .select('id', 'job_title', 'expiry_date', 'job_detail', 'matching_skill')
         .where('company_id', id),
