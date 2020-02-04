@@ -54,7 +54,7 @@ async function getCompanyProfile(id) {
         .where('company_id', id),
         joblistings: await db('joblistings')
         .select('id', 'job_title', 'expiry_date', 'job_detail', 'matching_skill')
-        .where('company_id', id),
+        .where('company_id', id)
     }
     return profileDetail
 }
