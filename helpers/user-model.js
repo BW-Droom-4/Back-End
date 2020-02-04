@@ -65,14 +65,14 @@ async function getUserById(id) {
 async function getUserProfile(id) {
     const user = await (
         db('users')
-        .select('*')
+        .select('id', 'firstname', 'lastname', 'email')
         .where('id', id)
     )
     profileDetail = {
         ...user,
-        profiles: await db('userprofiles')
-        .select('id','occupation_title','about_user','years_of_experience)
-        .where('user_id', id),
+//         profiles: await db('userprofiles')
+//         .select('id', 'occupation_title', 'about_user', 'years_of_experience)
+//         .where('user_id', id),
         interests: await db('userinterests')
         .select('id', 'interest_area')
         .where('user_id', id),
