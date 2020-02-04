@@ -63,14 +63,16 @@ async function getUserById(id) {
 
   
 async function getUserProfile(id) {
-    const profile = await (
-        db('users as u')
-        .join('userprofiles as up', 'up.user_id', 'u.id')
-        .select('u.id', 'up.occupation_title', 'up.about_user', 'up.years_of_experience')
-        .where('u.id', id)
+    const user = await (
+        db('users')
+        .select('*')
+        .where('id', id)
     )
     profileDetail = {
-        ... profile,
+        ...user,
+        profiles: await db('userprofiles')
+        .select('id','occupation_title','about_user','years_of_experience)
+        .where('user_id', id),
         interests: await db('userinterests')
         .select('id', 'interest_area')
         .where('user_id', id),
