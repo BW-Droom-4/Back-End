@@ -49,7 +49,7 @@ router.post('/login', async(req, res) => {
     const company = await Companies.findBy({email}).first()
         if (company && bcrypt.compareSync(password, company.password)) {
             const token = signToken(company)
-            res.status(200).json({message: `Hi ${company.companyName}, Welcome to Droom!. Your token is ${token}`})
+            res.status(200).json({token})
         } 
         else {
             res.status(401).json({message: 'Invalid credentials. Password did not match our records.'})

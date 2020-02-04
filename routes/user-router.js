@@ -1,6 +1,63 @@
 const router = require('express').Router();
 const Users = require('../helpers/user-model');
+const Images = require('../helpers/image-model');
 const authenticate = require('../auth/authenticate-middleware');
+const multer = require('multer');
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb (null, './uploads/')
+    },
+    filename: function (req, file, cb) {
+        cb (null, new Date().toISOString() + file.originalname)
+    }
+})
+
+const fileFilter = (req, file, cb) => {
+    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+        cb(null, true);
+    } else {
+        cb(null, false);
+    }   
+}
+
+const upload = multer({storage: storage, limits: {
+    fileSize: 1024 * 1024 * 5
+    },
+    fileFilter: fileFilter
+})
+
+router.post('/:id/upload', upload.single('user_image'), (req, res) => {
+    console.log(req.file)
+    const id = req.params.id
+    const user_id  = req.body.user_id;
+    const { user_image } = req.file.path
+
+    if (!user_id || !user_image) {
+        res.status(400).json({errorMessage: "Please provide user id to upload image."})
+    } 
+    else if (user_id && user_image) {
+        Users.getUserById(id)
+        .then(user => {
+            if(!user){
+                res.status(404).json({error: 'Failed to add image because no user with such id found'})
+            } 
+            else {
+                Images.insertUserImage(req.body)
+                .then( image => {
+                    res.status(201).json(image)
+                })
+                .catch( err => {
+                    res.status(500).json({error: 'Failed to add image. Try again later'})
+                })
+            }
+        })
+        .catch( err => {
+            res.status(500).json({error: 'Failed to get user to add image.'})
+        })
+    
+    }
+})
 
 router.get('/', (req, res)=>{
     Users.getUser()

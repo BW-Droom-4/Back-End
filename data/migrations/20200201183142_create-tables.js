@@ -13,7 +13,7 @@ exports.up = function(knex) {
            .notNullable();
         tbl.string('role')
            .defaultTo('Job Seeker')
-        tbl.timestamps({useTimestamps: true}, {defaultToNow: false})
+        tbl.timestamps (true, true)
     })
     .createTable('userimages', tbl => {
         tbl.increments('id');
@@ -67,7 +67,7 @@ exports.up = function(knex) {
            .notNullable();
         tbl.string('role')
            .defaultTo('Hiring Company')
-        tbl.timestamps({useTimestamps: true}, {defaultToNow: true})
+        tbl.timestamps(true, true);
     })
     .createTable('companyimages', tbl => {
         tbl.increments('id');
@@ -93,7 +93,7 @@ exports.up = function(knex) {
            .unsigned().notNullable().references('id').inTable('companies').onDelete('CASCADE').onUpdate('CASCADE');
         tbl.string('job_title')
            .notNullable();
-        tbl.timestamps({useTimestamps: true}, {defaultToNow: true})
+        tbl.timestamps(true, true);
         tbl.date('expiry_date');
         tbl.text('job_detail')
            .notNullable();
@@ -102,6 +102,17 @@ exports.up = function(knex) {
            'Music', 'Film-Making', 'Research', 'Trading', 'Data Science', 'Design', 'Services'])
        .defaultTo('Programming')    
     })
+
+    .createTable('matchmakers', tbl => {
+      tbl.increments('id');
+      tbl.integer('company_id')
+         .unsigned().notNullable().references('id').inTable('companies').onDelete('CASCADE').onUpdate('CASCADE');
+      tbl.integer('user_id')
+         .unsigned().notNullable().references('id').inTable('users').onDelete('CASCADE').onUpdate('CASCADE');
+      tbl.timestamps(true, true);
+      tbl.boolean('');
+   })
+
 };
 exports.down = function(knex) {
     return knex.schema

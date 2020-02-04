@@ -38,18 +38,18 @@ router.post('/login', (req, res) => {
   let { firstname, email, password } = req.body;
 
  // step 2 - check if user exists in our database
-    const userExists =  Users.findBy({email}).first();
-    if (!userExists) 
-        return res.status(400).json({ message: "Email doesn't exist in our database." });
+    // const userExists =  Users.findBy({email}).first();
+    // if (!userExists) 
+    //     return res.status(400).json({ message: "Email doesn't exist in our database." });
 
     Users.findBy({email}).first()
     .then( user => {
         if (user && bcrypt.compareSync(password, user.password)) {
             const token = signToken(user)
-            res.status(200).json({message: `Hi ${user.firstname}, Welcome to Droom!. Your token is ${token}`})
+            res.status(200).json({token})
         } 
         else {
-            res.status(401).json({message: 'Invalid credentials. Password did not match our records.'})
+            res.status(401).json({message: 'Invalid credentials. Email or Password did not match our records.'})
         }
     })
     .catch (() => {
