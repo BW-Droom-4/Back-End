@@ -44,7 +44,7 @@ async function getCompanyById(id) {
 async function getCompanyProfile(id) {
     const company = await (
         db('companies')
-        .select('*')
+        .select('id', 'companyName', 'email')
         .where('id', id)
     )
     profileDetail = {
