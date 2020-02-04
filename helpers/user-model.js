@@ -70,14 +70,15 @@ async function getUserProfile(id) {
     )
     profileDetail = {
         ...user,
-//         profiles: await db('userprofiles')
-//         .select('id', 'occupation_title', 'about_user', 'years_of_experience)
-//         .where('user_id', id),
+   
         interests: await db('userinterests')
         .select('id', 'interest_area')
         .where('user_id', id),
         experiences: await db('userexperiences')
         .select('id', 'company_worked_for', 'employment_startdate', 'employment_enddate', 'experience_detail')
+        .where('user_id', id),
+         profiles: await db('userprofiles')
+        .select('id', 'occupation_title', 'about_user', 'years_of_experience)
         .where('user_id', id)
     }
     return profileDetail
