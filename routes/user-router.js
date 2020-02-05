@@ -216,7 +216,7 @@ router.put('/:user_id/experience/:id', authenticate, (req, res)=>{
                         res.status(404).json({error: 'Failed to update experience because no such experience id found'})
                     }
                     else {
-                        Users.updateUserExperience(experienceData)
+                        Users.updateUserExperience(id, experienceData)
                         .then( exp => {
                             res.status(201).json(exp)
                         })
@@ -322,7 +322,7 @@ router.put('/:user_id/interest/:id', authenticate, (req, res)=>{
                         res.status(404).json({error: 'Failed to update interest because no such interest id found'})
                     }
                     else {
-                        Users.updateUserInterest(interestData)
+                        Users.updateUserInterest(id, interestData)
                         .then( interest => {
                             res.status(201).json(interest)
                         })
@@ -429,7 +429,7 @@ router.put('/:user_id/profile/:id', authenticate, (req, res)=>{
                         res.status(404).json({error: 'Failed to update profile because no such interest id found'})
                     }
                     else {
-                        Profiles.updateUserProfile(profilesData)
+                        Profiles.updateUserProfile(id, profilesData)
                         .then( pro => {
                             res.status(201).json(pro)
                         })
