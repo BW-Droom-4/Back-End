@@ -123,12 +123,12 @@ router.get('/:id/profile', authenticate, (req, res) => {
 router.put('/:id', authenticate, (req, res) => {
     const id = req.params.id
     const userData = req.body
-    const { firstname, lastname, email, password } = userData
+    const { firstname, lastname, email } = userData
 
-    if (!firstname || !lastname || !email || !password) {
+    if (!firstname || !lastname || !email) {
         res.status(400).json({errorMessage: "Please provide all contents for the user."})
     }
-    else if (firstname && lastname && email && password) {
+    else if (firstname && lastname && email) {
         Users.updateUser(id, userData)
         .then (user => {
             if (user) {
