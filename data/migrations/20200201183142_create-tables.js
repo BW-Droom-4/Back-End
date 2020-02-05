@@ -130,6 +130,6 @@ exports.down = function(knex) {
     .dropTableIfExists('companies')
     .dropTableIfExists('companyimages')
     .dropTableIfExists('companyprofiles')
-    .dropTableIfExists('joblistings')
-    .dropTableIfExists('matchmakers')
+    .dropTableIfExists('userlikedcompany')
+    .dropTableIfExists('companylikeduser')
 };
