@@ -123,12 +123,12 @@ router.get('/:id/profile', authenticate, (req, res) => {
 router.put('/:id', authenticate, (req, res) => {
     const id = req.params.id
     const companyData = req.body
-    const { companyName, email, password } = companyData
+    const { companyName, email } = companyData
 
-    if (!companyName || !email || !password) {
+    if (!companyName || !email) {
         res.status(400).json({errorMessage: "Please provide all contents for the company."})
     }
-    else if (companyName && email && password) {
+    else if (companyName && email) {
         Companies.updateCompany(id, companyData)
         .then (company => {
             if (company) {
