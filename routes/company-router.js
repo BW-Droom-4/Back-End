@@ -215,7 +215,7 @@ router.put('/:company_id/joblisting/:id', authenticate, (req, res)=>{
                         res.status(404).json({error: 'Failed to update joblist because no such joblist id found'})
                     }
                     else {
-                        Companies.updateJobListing(joblistingData)
+                        Companies.updateJobListing(id, joblistingData)
                         .then( joblist => {
                             res.status(201).json(joblist)
                         })
@@ -322,7 +322,7 @@ router.put('/:company_id/profile/:id', authenticate, (req, res)=>{
                         res.status(404).json({error: 'Failed to update profile because no such interest id found'})
                     }
                     else {
-                        Profiles.updatecompanyProfile(profilesData)
+                        Profiles.updatecompanyProfile(id, profilesData)
                         .then( pro => {
                             res.status(201).json(pro)
                         })
