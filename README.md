@@ -17,7 +17,7 @@
 | POST   | /api/users/:id/experience                 | Add experience of user        |      [x]      |
 | POST   | /api/users/:id/interest                   | Add interest of user          |      [x]      |
 | POST   | /api/users/:id/profile                    | Add profile detail of user    |      [x]      |
-| POST   | /api/users/:id/upload                     | Upload an user image          |      [x]      |
+| POST** | /api/users/:id/upload                     | Upload an user image          |      [x]      |
 | PUT    | /api/users/:id                            | Update user by id             |      [x]      |
 | PUT    | /api/users/:user_id/experience/:id        | Update user experience by id  |      [x]      |
 | PUT    | /api/users/:user_id/interest/:id          | Update user interest by id    |      [x]      |
