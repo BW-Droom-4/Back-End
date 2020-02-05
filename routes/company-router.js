@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const Companies = require('../helpers/company-model');
+const Profiles = require('../helpers/profile-model')
 const authenticate = require('../auth/authenticate-middleware');
 
 router.get('/', authenticate, (req, res)=>{
@@ -198,6 +199,113 @@ router.delete('/:company_id/joblisting/:id', authenticate, (req, res)=>{
     })
     .catch( err => {
         res.status(500).json({error: 'Failed to get user to delete joblist.'})
+    })
+})
+
+//profile model
+
+router.post('/:id/profile', authenticate, (req, res)=>{
+    const profilesData = req.body
+    const id = req.params.id
+    const { company_id, sector, about_company } = profilesData;
+
+    if (!company_id || !sector || !about_company) {
+        res.status(400).json({errorMessage: "Please provide all contents for the profile of company."})
+    } 
+    else if (company_id && sector && about_company) {
+        Companies.getCompanyById(id)
+        .then(company => {
+            if(!company){
+                res.status(404).json({error: 'Failed to add profile because no company with such id found'})
+            } 
+            else {
+                Profiles.insertCompanyProfile(profilesData)
+                .then( pro => {
+                    res.status(201).json(pro)
+                })
+                .catch( err => {
+                    res.status(500).json({error: 'Failed to add profile. Try again later'})
+                })
+            }
+        })
+        .catch( err => {
+            res.status(500).json({error: 'Failed to get company to add profile.'})
+        })
+    
+    }
+})
+
+router.put('/:company_id/profile/:id', authenticate, (req, res)=>{
+    const profilesData = req.body
+    const id = req.params.id
+
+    const { company_id, sector, about_company } = profilesData;
+
+    if (!company_id || !sector || !about_company) {
+        res.status(400).json({errorMessage: "Please provide all contents for the profile of company."})
+    } 
+    else if (company_id && sector && about_company) {
+        Companies.getCompanyById(company_id)
+        .then(company => {
+            if(!company){
+                res.status(404).json({error: 'Failed to update profile because no company with such id found'})
+            } 
+            else if (company) {
+                Profiles.getCompanyProfileById(id)
+                .then (pro => {
+                    if (!pro) {
+                        res.status(404).json({error: 'Failed to update profile because no such interest id found'})
+                    }
+                    else {
+                        Profiles.updatecompanyProfile(profilesData)
+                        .then( pro => {
+                            res.status(201).json(pro)
+                        })
+                        .catch( err => {
+                            res.status(500).json({error: 'Failed to update profile. Try again later'})
+                        })
+                    }
+                })
+            }
+        })
+        .catch( err => {
+            res.status(500).json({error: 'Failed to get company to update profile.'})
+        })
+    
+    }
+})
+
+router.delete('/:company_id/profile/:id', authenticate, (req, res)=>{
+    const profilesData = req.body
+    const id = req.params.id
+
+    const { company_id, sector, about_user, years_of_experience } = profilesData;
+
+    Companies.getCompanyById(company_id)
+    .then(company => {
+        if(!company){
+            res.status(404).json({error: 'Failed to delete profile because no company with such id found'})
+        } 
+        else if (company) {
+            Profiles.getCompanyProfileById(id)
+            .then (pro => {
+                if (!pro) {
+                    res.status(404).json({error: 'Failed to delete profile because no such interest id found'})
+                }
+                else {
+                    Profiles.removeCompanyProfile(profilesData)
+                    .then( pro => {
+                        res.status(201).json(pro)
+                    })
+                    .catch( err => {
+                        res.status(500).json({error: 'Failed to delete profile. Try again later'})
+                    })
+                }
+            })
+        }
+    })
+    .catch( err => {
+        res.status(500).json({error: 'Failed to get company to delete profile.'})
     })
 })
 

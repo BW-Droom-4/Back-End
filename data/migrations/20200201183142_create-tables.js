@@ -110,7 +110,8 @@ exports.up = function(knex) {
       tbl.integer('user_id')
          .unsigned().notNullable().references('id').inTable('users').onDelete('CASCADE').onUpdate('CASCADE');
       tbl.timestamps(true, true);
-      tbl.boolean('');
+      tbl.boolean('user_liked').defaultTo(false);
+      tbl.boolean('company_liked').defaultTo(false);
    })
 
 };

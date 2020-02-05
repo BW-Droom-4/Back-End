@@ -2,7 +2,7 @@
 
 > https://droom-4.herokuapp.com/
 
-**BREAKING CHANGE** 
+**BREAKING NEWS: Check-in frequently to get up-to-date...😀😂** 
 
 * List of API detail. Note: Some of the routes are in progress!!!!
 
@@ -12,12 +12,12 @@
 | GET    | /api/users/                               | Get all users                 |      [x]      |
 | GET    | /api/users/:id                            | Get user by id                |      [x]      |
 | GET    | /api/users/:id/profile                    | Get user's profile by id      |      [x]      |
-| POST   | /api/auth/users/register                  | Register new user             |      [x]      |
-| POST   | /api/auth/users/login                     | Log in user                   |      [x]      |
+| POST   | /api/auth/users/register                  | Register new user             |      [ ]      |
+| POST   | /api/auth/users/login                     | Log in user                   |      [ ]      |
 | POST   | /api/users/:id/experience                 | Add experience of user        |      [x]      |
 | POST   | /api/users/:id/interest                   | Add interest of user          |      [x]      |
 | POST   | /api/users/:id/profile                    | Add profile detail of user    |      [x]      |
-| POST   | /api/users/:id/upload                     | Upload an user image          |      [x]      |
+| POST** | /api/users/:id/upload                     | Upload an user image          |      [x]      |
 | PUT    | /api/users/:id                            | Update user by id             |      [x]      |
 | PUT    | /api/users/:user_id/experience/:id        | Update user experience by id  |      [x]      |
 | PUT    | /api/users/:user_id/interest/:id          | Update user interest by id    |      [x]      |
@@ -28,23 +28,23 @@
 | GET    | /api/companies/                           | Get all companies             |      [x]      |
 | GET    | /api/companies/:id                        | Get company by id             |      [x]      |
 | GET    | /api/companies/:id/profile                | Get company's profile by id   |      [x]      |
-| POST   | /api/auth/companies/register              | Register new company          |      [x]      |
-| POST   | /api/auth/companies/login                 | Log in company                |      [x]      |
+| POST   | /api/auth/companies/register              | Register new company          |      [ ]      |
+| POST   | /api/auth/companies/login                 | Log in company                |      [ ]      |
 | POST   | /api/companies/:id/joblisting             | Add joblisting of company     |      [x]      |
-| POST   | /api/companies/:id/profile                | Add profile detail of user    |      [x]      |
+| POST   | /api/companies/:id/profile                | Add profile detail of company |      [x]      |
 | POST   | /api/companies/:id/upload                 | Upload a company image        |      [x]      |
-| PUT    | /api/companies/:id                        | Update user by id             |      [x]      |
-| PUT    | /api/companies/:company_id/joblisting/:id | Update user interest by id    |      [x]      |
-| PUT    | /api/companies/:company_id/profile/:id    | Update user profile           |      [x]      |
-| DELETE | /api/companies/:id                        | Remove user by id             |      [x]      |
-| DELETE | /api/companies/:company_id/joblisting/:id | Remove user experience by id  |      [x]      | 
+| PUT    | /api/companies/:id                        | Update company by id          |      [x]      |
+| PUT    | /api/companies/:company_id/joblisting/:id | Update joblisting by id       |      [x]      |
+| PUT    | /api/companies/:company_id/profile/:id    | Update company profile        |      [x]      |
+| DELETE | /api/companies/:id                        | Remove company by id          |      [x]      |
+| DELETE | /api/companies/:company_id/joblisting/:id | Remove job listing by id      |      [x]      | 
 
 > Login needs Authorization Header
 
 ```
 headers: {
   'Content-Type': 'application/json',
-  Authorization: token,
+   Authorization: token,
 }
 ```
 
