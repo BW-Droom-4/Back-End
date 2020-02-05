@@ -251,7 +251,7 @@ router.delete('/:company_id/joblisting/:id', authenticate, (req, res)=>{
                     res.status(404).json({error: 'Failed to delete joblist because no such joblist id found'})
                 }
                 else {
-                    Companies.removeJobListing(joblistingData)
+                    Companies.removeJobListing(id, joblistingData)
                     .then( joblist => {
                         res.status(201).json(joblist)
                     })
@@ -358,7 +358,7 @@ router.delete('/:company_id/profile/:id', authenticate, (req, res)=>{
                     res.status(404).json({error: 'Failed to delete profile because no such interest id found'})
                 }
                 else {
-                    Profiles.removeCompanyProfile(profilesData)
+                    Profiles.removeCompanyProfile(id, profilesData)
                     .then( pro => {
                         res.status(201).json(pro)
                     })
