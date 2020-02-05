@@ -1,7 +1,71 @@
 const router = require('express').Router();
 const Companies = require('../helpers/company-model');
-const Profiles = require('../helpers/profile-model')
+const Profiles = require('../helpers/profile-model');
+const Images = require('../helpers/image-model')
 const authenticate = require('../auth/authenticate-middleware');
+const multer = require('multer');
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb (null, './uploadscompany/')
+    },
+    filename: function (req, file, cb) {
+        console.log(req.body)
+        const test = new Date().toISOString() + file.originalname
+        cb (null, test)
+    }
+})
+
+const fileFilter = (req, file, cb) => {
+    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+        cb(null, true);
+    } else {
+        cb(null, false);
+    }   
+}
+
+const upload = multer({storage: storage, limits: {
+    fileSize: 1024 * 1024 * 5
+    },
+    fileFilter: fileFilter
+})
+
+router.post('/:id/upload', upload.single('company_image'), (req, res) => {
+    console.log(req.file)
+
+    const imageData = req.file
+    console.log(imageData)
+    const company_id = req.params.id
+    // console.log(id)
+    // const { user_id } = id
+    const company_image = req.file.path
+    console.log(company_image)
+    console.log(req.body)
+    if (!company_id || !company_image) {
+        res.status(400).json({errorMessage: "Please provide company id to upload image."})
+    } 
+    else if (company_id && company_image) {
+        Companies.getCompanyById(company_id)
+        .then(company => {
+            if(!company){
+                res.status(404).json({error: 'Failed to add image because no company with such id found'})
+            } 
+            else {
+                Images.insertCompanyImage({company_id, company_image})
+                .then( image => {
+                    res.status(201).json(image)
+                })
+                .catch( err => {
+                    res.status(500).json({error: 'Failed to add image. Try again later'})
+                })
+            }
+        })
+        .catch( err => {
+            res.status(500).json({error: 'Failed to get company to add image.'})
+        })
+    
+    }
+})
 
 router.get('/', authenticate, (req, res)=>{
     Companies.getCompany()

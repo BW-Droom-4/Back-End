@@ -2,15 +2,19 @@ const router = require('express').Router();
 const Users = require('../helpers/user-model');
 const Images = require('../helpers/image-model');
 const Profiles = require('../helpers/profile-model');
+const Matches = require('../helpers/match-model');
 const authenticate = require('../auth/authenticate-middleware');
 const multer = require('multer');
+// const imageData = require('../uploads/2020-02-05T03:02:56.227Zuser_avatar.png');
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb (null, './uploads/')
     },
     filename: function (req, file, cb) {
-        cb (null, new Date().toISOString() + file.originalname)
+        console.log(req.body)
+        const test = new Date().toISOString() + file.originalname
+        cb (null, test)
     }
 })
 
@@ -30,22 +34,26 @@ const upload = multer({storage: storage, limits: {
 
 router.post('/:id/upload', upload.single('user_image'), (req, res) => {
     console.log(req.file)
-    const imageData = req.body
-    const id = req.params.id
-    const { user_id } = imageData
+
+    const imageData = req.file
+    console.log(imageData)
+    const user_id = req.params.id
+    // console.log(id)
+    // const { user_id } = id
     const user_image = req.file.path
+    console.log(user_image)
     console.log(req.body)
     if (!user_id || !user_image) {
         res.status(400).json({errorMessage: "Please provide user id to upload image."})
     } 
     else if (user_id && user_image) {
-        Users.getUserById(id)
+        Users.getUserById(user_id)
         .then(user => {
             if(!user){
                 res.status(404).json({error: 'Failed to add image because no user with such id found'})
             } 
             else {
-                Images.insertUserImage(imageData)
+                Images.insertUserImage({user_id, user_image})
                 .then( image => {
                     res.status(201).json(image)
                 })
@@ -472,6 +480,41 @@ router.delete('/:user_id/profile/:id', authenticate, (req, res)=>{
     .catch( err => {
         res.status(500).json({error: 'Failed to get user to delete profile.'})
     })
+})
+
+
+// match
+router.post('/:id/match', (req, res) => {
+    console.log(req.body)
+    // const test = json.parse(req.body)
+    const matchData = req.body
+    // console.log(test)
+    const { user_id, company_id, user_liked} = matchData
+    console.log(matchData)
+    if (!user_id || !company_id || !user_liked) {
+        res.status(400).json({errorMessage: "Please provide user id to add user likes."})
+    } 
+    else if (user_id && company_id && user_liked) {
+        Users.getUserById(user_id)
+        .then(user => {
+            if(!user){
+                res.status(404).json({error: 'Failed to add user likes because no user with such id found'})
+            } 
+            else {
+                Matches.insertUserLikes({matchData})
+                .then( image => {
+                    res.status(201).json(image)
+                })
+                .catch( err => {
+                    res.status(500).json({error: 'Failed to add user likes. Try again later'})
+                })
+            }
+        })
+        .catch( err => {
+            res.status(500).json({error: 'Failed to get user to add user likes.'})
+        })
+    
+    }
 })
 
 module.exports = router;

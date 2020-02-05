@@ -24,7 +24,7 @@ function getUserProfile() {
 function getUserProfileById(id) {
     return db('userprofiles')
     .where('id', id)
-}[0]
+}
 
 function insertUserProfile(userprofile) {
     return db('userprofiles')
@@ -53,7 +53,7 @@ function getCompanyProfile() {
 function getCompanyProfileById(id) {
     return db('companyprofiles')
     .where('id', id)
-}[0]
+}
 
 function insertCompanyProfile(companyprofile) {
     return db('companyprofiles')
@@ -64,7 +64,7 @@ function updateCompanyProfile(id, companyprofile) {
     return db('companyprofiles')
     .where('id', id)
     .update(companyprofile)
-}[0]
+}
   
 function removeCompanyProfile(id) {
     return db('companyprofiles')

@@ -22,11 +22,11 @@ function getUserImage() {
 function getUserImageById(id) {
     return db('userimages')
     .where('id', id)
-}[0]
+}
 
-function insertUserImage(userimage) {
+function insertUserImage(user_id, user_image) {
     return db('userimages')
-      .insert(userimage)
+      .insert(user_id, user_image)
   }
     
   function removeUserImage(id) {
@@ -46,9 +46,9 @@ function getCompanyImageById(id) {
     .where('id', id)
 }[0]
 
-function insertCompanyImage(companyimage) {
+function insertCompanyImage(company_id, company_image) {
     return db('companyimages')
-    .insert(companyimage)
+    .insert(company_id, company_image)
 }
   
 function removeCompanyImage(id) {
