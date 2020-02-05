@@ -52,6 +52,9 @@ async function getCompanyProfile(id) {
         profiles: await db('companyprofiles')
         .select('id','sector','about_company')
         .where('company_id', id),
+        images: await db('companyimages')
+        .select('id','company_image')
+        .where('company_id', id),
         joblistings: await db('joblistings')
         .select('id', 'job_title', 'expiry_date', 'job_detail', 'matching_skill')
         .where('company_id', id)
