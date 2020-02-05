@@ -73,7 +73,10 @@ async function getUserProfile(id) {
         profiles: await db('userprofiles')
         .select('id', 'occupation_title', 'about_user', 'years_of_experience')
         .where('user_id', id),
-         interests: await db('userinterests')
+        images: await db('userimages')
+        .select('id', 'user_image')
+        .where('user_id', id),
+        interests: await db('userinterests')
         .select('id', 'interest_area')
         .where('user_id', id),
         experiences: await db('userexperiences')
