@@ -41,7 +41,8 @@
 | POST   | /api/companies/:id/match                  | Add for company swiping right |      [x]      |
 | POST   | /api/users/:id/match                      | Add for company swiping right |      [x]      |
 | GET    | /api/companies/:id/match                  | Get likes for company by id   |      [x]      |
-| GET    | /api/users/:id/match                       | Get likes for user by id     |      [x]      |
+| GET    | /api/users/:id/match                      | Get likes for user by id      |      [x]      |
+| GET    | /api/matches                              | Get all likes/unlikes together|      [x]      |
 
 
 > Login needs Authorization Header
