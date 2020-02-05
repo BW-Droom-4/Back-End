@@ -12,7 +12,7 @@ exports.up = function(knex) {
         tbl.string('password')
            .notNullable();
         tbl.string('role')
-           .defaultTo('Job Seeker')
+           .defaultTo('Job Seeker');
         tbl.timestamps (true, true)
     })
     .createTable('userimages', tbl => {
@@ -103,16 +103,22 @@ exports.up = function(knex) {
        .defaultTo('Programming')    
     })
 
-    .createTable('matchmakers', tbl => {
+    .createTable('userlikedcompany', tbl => {
       tbl.increments('id');
-      tbl.integer('company_id')
-         .unsigned().notNullable().references('id').inTable('companies').onDelete('CASCADE').onUpdate('CASCADE');
       tbl.integer('user_id')
+         .unsigned().notNullable().references('id').inTable('companies').onDelete('CASCADE').onUpdate('CASCADE');
+      tbl.integer('company_id')
          .unsigned().notNullable().references('id').inTable('users').onDelete('CASCADE').onUpdate('CASCADE');
-      tbl.timestamps(true, true);
-      tbl.boolean('');
+      tbl.boolean('user_liked').defaultTo(false);
    })
-
+   .createTable('companylikeduser', tbl => {
+      tbl.increments('id');
+      tbl.integer('user_id')
+         .unsigned().notNullable().references('id').inTable('companies').onDelete('CASCADE').onUpdate('CASCADE');
+      tbl.integer('company_id')
+         .unsigned().notNullable().references('id').inTable('users').onDelete('CASCADE').onUpdate('CASCADE');
+      tbl.boolean('company_liked').defaultTo(false);
+   })
 };
 exports.down = function(knex) {
     return knex.schema
@@ -125,4 +131,5 @@ exports.down = function(knex) {
     .dropTableIfExists('companyimages')
     .dropTableIfExists('companyprofiles')
     .dropTableIfExists('joblistings')
+    .dropTableIfExists('matchmakers')
 };

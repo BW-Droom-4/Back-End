@@ -86,7 +86,7 @@ function getJobListing() {
 function getJobListingById(id) {
     return db('joblistings')
     .where('id', id)
-}[0]
+}
 
 function insertJobListing(joblisting) {
     return db('joblistings')
@@ -97,7 +97,7 @@ function updateJobListing(id, joblisting) {
     return db('joblistings')
     .where('id', id)
     .update(joblisting)
-}[0]
+}
 
     
 function removeJobListing(id) {

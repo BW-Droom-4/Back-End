@@ -1,6 +1,8 @@
 const router = require('express').Router();
 const Users = require('../helpers/user-model');
 const Images = require('../helpers/image-model');
+const Profiles = require('../helpers/profile-model');
+const Matches = require('../helpers/match-model');
 const authenticate = require('../auth/authenticate-middleware');
 const multer = require('multer');
 
@@ -9,7 +11,9 @@ const storage = multer.diskStorage({
         cb (null, './uploads/')
     },
     filename: function (req, file, cb) {
-        cb (null, new Date().toISOString() + file.originalname)
+        console.log(req.body)
+        const test = new Date().toISOString() + file.originalname
+        cb (null, test)
     }
 })
 
@@ -29,21 +33,26 @@ const upload = multer({storage: storage, limits: {
 
 router.post('/:id/upload', upload.single('user_image'), (req, res) => {
     console.log(req.file)
-    const id = req.params.id
-    const user_id  = req.body.user_id;
-    const { user_image } = req.file.path
 
+    const imageData = req.file
+    console.log(imageData)
+    const user_id = req.params.id
+    // console.log(id)
+    // const { user_id } = id
+    const user_image = req.file.path
+    console.log(user_image)
+    console.log(req.body)
     if (!user_id || !user_image) {
         res.status(400).json({errorMessage: "Please provide user id to upload image."})
     } 
     else if (user_id && user_image) {
-        Users.getUserById(id)
+        Users.getUserById(user_id)
         .then(user => {
             if(!user){
                 res.status(404).json({error: 'Failed to add image because no user with such id found'})
             } 
             else {
-                Images.insertUserImage(req.body)
+                Images.insertUserImage({user_id, user_image})
                 .then( image => {
                     res.status(201).json(image)
                 })
@@ -155,6 +164,7 @@ router.delete('/:id', authenticate, (req, res) => {
 
 router.post('/:id/experience', authenticate, (req, res)=>{
     const experienceData = req.body
+    console.log(experienceData)
     const id = req.params.id
     const { user_id, company_worked_for, employment_startdate, employment_enddate, experience_detail } = experienceData;
 
@@ -364,5 +374,174 @@ router.delete('/:user_id/interest/:id', authenticate, (req, res)=>{
     })
 })
 
+//profile model
+
+router.post('/:id/profile', authenticate, (req, res)=>{
+    const profilesData = req.body
+    const id = req.params.id
+    const { user_id, occupation_title, about_user, years_of_experience } = profilesData;
+
+    if (!user_id || !occupation_title || !about_user || ! years_of_experience) {
+        res.status(400).json({errorMessage: "Please provide all contents for the profile of user."})
+    } 
+    else if (user_id && occupation_title && about_user && years_of_experience) {
+        Users.getUserById(id)
+        .then(user => {
+            if(!user){
+                res.status(404).json({error: 'Failed to add profile because no user with such id found'})
+            } 
+            else {
+                Profiles.insertUserProfile(profilesData)
+                .then( pro => {
+                    res.status(201).json(pro)
+                })
+                .catch( err => {
+                    res.status(500).json({error: 'Failed to add profile. Try again later'})
+                })
+            }
+        })
+        .catch( err => {
+            res.status(500).json({error: 'Failed to get user to add profile.'})
+        })
+    
+    }
+})
+
+router.put('/:user_id/profile/:id', authenticate, (req, res)=>{
+    const profilesData = req.body
+    const id = req.params.id
+
+    const { user_id, occupation_title, about_user, years_of_experience } = profilesData;
+
+    if (!user_id || !occupation_title || !about_user || ! years_of_experience) {
+        res.status(400).json({errorMessage: "Please provide all contents for the profile of user."})
+    } 
+    else if (user_id && occupation_title && about_user && years_of_experience) {
+        Users.getUserById(user_id)
+        .then(user => {
+            if(!user){
+                res.status(404).json({error: 'Failed to update profile because no user with such id found'})
+            } 
+            else if (user) {
+                Profiles.getUserProfileById(id)
+                .then (pro => {
+                    if (!pro) {
+                        res.status(404).json({error: 'Failed to update profile because no such interest id found'})
+                    }
+                    else {
+                        Profiles.updateUserProfile(profilesData)
+                        .then( pro => {
+                            res.status(201).json(pro)
+                        })
+                        .catch( err => {
+                            res.status(500).json({error: 'Failed to update profile. Try again later'})
+                        })
+                    }
+                })
+            }
+        })
+        .catch( err => {
+            res.status(500).json({error: 'Failed to get user to update profile.'})
+        })
+    
+    }
+})
+
+router.delete('/:user_id/profile/:id', authenticate, (req, res)=>{
+    const profilesData = req.body
+    const id = req.params.id
+
+    const { user_id, occupation_title, about_user, years_of_experience } = profilesData;
+
+    Users.getUserById(user_id)
+    .then(user => {
+        if(!user){
+            res.status(404).json({error: 'Failed to delete profile because no user with such id found'})
+        } 
+        else if (user) {
+            Profiles.getUserProfileById(id)
+            .then (pro => {
+                if (!pro) {
+                    res.status(404).json({error: 'Failed to delete profile because no such interest id found'})
+                }
+                else {
+                    Profiles.removeUserProfile(profilesData)
+                    .then( pro => {
+                        res.status(201).json(pro)
+                    })
+                    .catch( err => {
+                        res.status(500).json({error: 'Failed to delete profile. Try again later'})
+                    })
+                }
+            })
+        }
+    })
+    .catch( err => {
+        res.status(500).json({error: 'Failed to get user to delete profile.'})
+    })
+})
+
+
+// match
+router.post('/:id/match', (req, res) => {
+    console.log(req.body)
+    // const test = json.parse(req.body)
+    const matchData = req.body
+    // console.log(test)
+    const { user_id, company_id, user_liked} = matchData
+    console.log(matchData)
+
+    if (!user_id || !company_id || !user_liked) {
+        res.status(400).json({errorMessage: `Please provide user id to add user likes.${company_id}`})
+    } 
+    else if (user_id && company_id && user_liked) {
+        Users.getUserById(user_id)
+        .then(user => {
+            if(!user){
+                res.status(404).json({error: 'Failed to add user likes because no user with such id found'})
+            } 
+            else {
+                Matches.insertUserLikes(matchData)
+                .then( image => {
+                    res.status(201).json(image)
+                })
+                .catch( err => {
+                    res.status(500).json({error: 'Failed to add user likes. Try again later'})
+                })
+            }
+        })
+        .catch( err => {
+            res.status(500).json({error: 'Failed to get user to add user likes.'})
+        })
+    
+    }
+})
+
+router.get('/:id/match', (req, res) => {
+    console.log(req.body)
+
+    const id = req.params.id
+    // const test = json.parse(req.body)
+        Users.getUserById(id)
+        .then(user => {
+            if(!user){
+                res.status(404).json({error: 'Failed to get user likes because no user with such id found'})
+            } 
+            else {
+                Matches.getUserLikesById(id)
+                .then( match => {
+                    res.status(201).json(match)
+                })
+                .catch( err => {
+                    res.status(500).json({error: 'Failed to get user likes. Try again later'})
+                })
+            }
+        })
+        .catch( err => {
+            res.status(500).json({error: 'Failed to get user to get user likes.'})
+        })
+    
+    
+})
 
 module.exports = router;

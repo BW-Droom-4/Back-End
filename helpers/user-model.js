@@ -139,7 +139,7 @@ function getUserInterest() {
 function getUserInterestById(id) {
     return db('userinterests')
     .where('id', id)
-}[0]
+}
 
 function insertUserInterest(userinterest) {
     return db('userinterests')
@@ -150,7 +150,7 @@ function updateUserInterest(id, userinterest) {
     return db('userinterests')
     .where('id', id)
     .update(userinterest)
-}[0]
+}
   
 function removeUserInterest(id) {
     return db('userinterests')

@@ -78,5 +78,20 @@ exports.seed = function(knex) {
       {id: 3, company_id: '3', job_title: 'Back-End Developer', expiry_date: '2020-12-31', job_detail: 'Must have experience in nodejs and express', matching_skill: 'Programming'},
     ]);
   })
+  .then(() => {
+    return knex('userlikedcompany').insert([
+      {id: 1, user_id: '1', company_id: '1', user_liked: 'true'},
+      {id: 2, user_id: '2', company_id: '2', user_liked: 'false'},
+      {id: 3, user_id: '3', company_id: '3', user_liked: 'true'},
+    ]);
+  })
+  .then(() => {
+    return knex('companylikeduser').insert([
+      {id: 1, user_id: '1', company_id: '1', company_liked: 'true'},
+      {id: 2, user_id: '2', company_id: '2', company_liked: 'true'},
+      {id: 3, user_id: '3', company_id: '3', company_liked: 'false'},
+    ]);
+  })
+
 
 };

@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
+// const bodyParser = require('body-parser');
 
 const authenticate = require('../auth/authenticate-middleware');
 const userAuthRoute = require('../auth/userAuthRouter');
@@ -13,7 +14,10 @@ const server = express();
 server.use(helmet());
 server.use(cors());
 server.use(express.json());
-
+// server.use(express.urlencoded({extended: true}))
+// server.use('/uploads', express.static('uploads'));
+// server.use(bodyParser.urlencoded({extended: false}))
+// server.use(bodyParser.json());
 
 server.use('/api/auth/users', userAuthRoute);
 server.use('/api/auth/companies', companyAuthRoute);
