@@ -1,7 +1,8 @@
 const router = require('express').Router();
 const Companies = require('../helpers/company-model');
 const Profiles = require('../helpers/profile-model');
-const Images = require('../helpers/image-model')
+const Images = require('../helpers/image-model');
+const Matches = require('../helpers/match-model')
 const authenticate = require('../auth/authenticate-middleware');
 const multer = require('multer');
 
@@ -372,5 +373,83 @@ router.delete('/:company_id/profile/:id', authenticate, (req, res)=>{
         res.status(500).json({error: 'Failed to get company to delete profile.'})
     })
 })
+
+
+//company match - company liked the user
+router.post('/:id/match', (req, res) => {
+    console.log(req.body)
+    // const test = json.parse(req.body)
+    const matchData = req.body
+    // console.log(test)
+    const { user_id, company_id, company_liked} = matchData
+    console.log(matchData)
+
+    if (!user_id || !company_id || !company_liked) {
+        res.status(400).json({errorMessage: `Please provide company id to add company likes.`})
+    } 
+    else if (user_id && company_id && company_liked) {
+        Companies.getCompanyById(company_id)
+        .then(company => {
+            if(!company){
+                res.status(404).json({error: 'Failed to add company likes because no company with such id found'})
+            } 
+            else {
+                Matches.insertCompanyLikes(matchData)
+                .then( image => {
+                    res.status(201).json(image)
+                })
+                .catch( err => {
+                    res.status(500).json({error: 'Failed to add company likes. Try again later'})
+                })
+            }
+        })
+        .catch( err => {
+            res.status(500).json({error: 'Failed to get company to add company likes.'})
+        })
+    
+    }
+})
+
+router.get('/:id/match', (req, res) => {
+    console.log(req.body)
+    const id = req.params.id
+
+    // const test = json.parse(req.body)
+        Companies.getCompanyById(id)
+        .then(company => {
+            if(!company){
+                res.status(404).json({error: 'Failed to get company likes because no company with such id found'})
+            } 
+            else {
+                Matches.getCompanyLikesById(id)
+                .then( match => {
+                    res.status(201).json(match)
+                })
+                .catch( err => {
+                    res.status(500).json({error: 'Failed to get company likes. Try again later'})
+                })
+            }
+        })
+        .catch( err => {
+            res.status(500).json({error: 'Failed to get company to get company likes.'})
+        }) 
+})
+
+router.get('/users/match', (req, res) => {
+    console.log(req.body)
+    const id = req.params.id
+
+    // const test = json.parse(req.body)
+    Matches.getUserCompanyLikes
+    .then( match => {
+        res.status(201).json(match)
+    })
+    .catch( err => {
+        res.status(500).json({error: 'Failed to get company likes. Try again later'})
+    })
+    
+    
+})
+
 
 module.exports = router;

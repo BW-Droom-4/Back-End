@@ -5,7 +5,6 @@ const Profiles = require('../helpers/profile-model');
 const Matches = require('../helpers/match-model');
 const authenticate = require('../auth/authenticate-middleware');
 const multer = require('multer');
-// const imageData = require('../uploads/2020-02-05T03:02:56.227Zuser_avatar.png');
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -491,8 +490,9 @@ router.post('/:id/match', (req, res) => {
     // console.log(test)
     const { user_id, company_id, user_liked} = matchData
     console.log(matchData)
+
     if (!user_id || !company_id || !user_liked) {
-        res.status(400).json({errorMessage: "Please provide user id to add user likes."})
+        res.status(400).json({errorMessage: `Please provide user id to add user likes.${company_id}`})
     } 
     else if (user_id && company_id && user_liked) {
         Users.getUserById(user_id)
@@ -501,7 +501,7 @@ router.post('/:id/match', (req, res) => {
                 res.status(404).json({error: 'Failed to add user likes because no user with such id found'})
             } 
             else {
-                Matches.insertUserLikes({matchData})
+                Matches.insertUserLikes(matchData)
                 .then( image => {
                     res.status(201).json(image)
                 })
@@ -515,6 +515,33 @@ router.post('/:id/match', (req, res) => {
         })
     
     }
+})
+
+router.get('/:id/match', (req, res) => {
+    console.log(req.body)
+
+    const id = req.params.id
+    // const test = json.parse(req.body)
+        Users.getUserById(id)
+        .then(user => {
+            if(!user){
+                res.status(404).json({error: 'Failed to get user likes because no user with such id found'})
+            } 
+            else {
+                Matches.getUserLikesById(id)
+                .then( match => {
+                    res.status(201).json(match)
+                })
+                .catch( err => {
+                    res.status(500).json({error: 'Failed to get user likes. Try again later'})
+                })
+            }
+        })
+        .catch( err => {
+            res.status(500).json({error: 'Failed to get user to get user likes.'})
+        })
+    
+    
 })
 
 module.exports = router;
