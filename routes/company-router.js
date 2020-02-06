@@ -255,11 +255,7 @@ router.delete('/:company_id/joblisting/:id', authenticate, (req, res)=>{
                 }
             })
         }
-    })
-    .catch( err => {
-        res.status(500).json({error: 'Failed to get company to delete joblist.'})
-    })
-})
+)
 
 //profile model
 
@@ -356,11 +352,7 @@ router.delete('/:company_id/profile/:id', authenticate, (req, res)=>{
                 }
             })
         }
-    })
-    .catch( err => {
-        res.status(500).json({error: 'Failed to get company to delete profile.'})
-    })
-})
+)
 
 
 //company match - company liked the user
