@@ -46,10 +46,13 @@ function insertCompanyLikes(matchData) {
 }
 
 function getUserCompanyLikes() {
-    return db('userlikedcompany as uc')
-    .join('companylikeduser as cu', 'uc.user_id', 'cu.user_id')
+    return db('users as u')
+    .join('companylikeduser as cu', 'cu.user_id', 'u.id')
+    .join('userlikedcompany as uc', 'uc.user_id', 'u.id')
     .select('uc.user_id', 'uc.company_id', 'uc.user_liked', 'cu.company_liked')
-    .where({'uc.user_id': 'cu.user_id', 'uc.company_id': 'cu.company_id'})
+    .where('uc.user_liked', '=', 'true',
+    'cu.company_liked', '=', 'true')
+    .orWhere({'uc.user_liked': '1', 'cu.company_liked': '1'})
 }
 
 
