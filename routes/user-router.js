@@ -256,11 +256,7 @@ router.delete('/:user_id/experience/:id', authenticate, (req, res)=>{
                 }
             })
         }
-    })
-    .catch( err => {
-        res.status(500).json({error: 'Failed to get user to delete experience.'})
-    })
-})
+)
 
 // userinterests
 router.post('/:id/interest', authenticate, (req, res)=>{
@@ -356,11 +352,7 @@ router.delete('/:user_id/interest/:id', authenticate, (req, res)=>{
                 }
             })
         }
-    })
-    .catch( err => {
-        res.status(500).json({error: 'Failed to get user to delete interest.'})
-    })
-})
+)
 
 //profile model
 
@@ -455,11 +447,7 @@ router.delete('/:user_id/profile/:id', authenticate, (req, res)=>{
                 }
             })
         }
-    })
-    .catch( err => {
-        res.status(500).json({error: 'Failed to get user to delete profile.'})
-    })
-})
+)
 
 
 // match
