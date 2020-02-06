@@ -4,7 +4,7 @@ const authenticate = require('../auth/authenticate-middleware');
 
 
 router.get('/', (req, res) => {
-    Matches.getUserLikes()
+    Matches.getUserCompanyLikes()
     .then( matches => {
         res.status(201).json(matches)
     })
