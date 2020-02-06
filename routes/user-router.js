@@ -252,7 +252,7 @@ router.delete('/:user_id/experience/:id', authenticate, (req, res)=>{
                     res.status(404).json({error: 'Failed to delete experience because no such experience id found'})
                 }
                 else {
-                    Users.removeUserExperience(id, experienceData)
+                    Users.removeUserExperience(id)
                     .then( exp => {
                         res.status(201).json(exp)
                     })
@@ -358,7 +358,7 @@ router.delete('/:user_id/interest/:id', authenticate, (req, res)=>{
                     res.status(404).json({error: 'Failed to delete interest because no such interest id found'})
                 }
                 else {
-                    Users.removeUserInterest(id, interestData)
+                    Users.removeUserInterest(id)
                     .then( interest => {
                         res.status(201).json(interest)
                     })
@@ -465,7 +465,7 @@ router.delete('/:user_id/profile/:id', authenticate, (req, res)=>{
                     res.status(404).json({error: 'Failed to delete profile because no such interest id found'})
                 }
                 else {
-                    Profiles.removeUserProfile(id, profilesData)
+                    Profiles.removeUserProfile(id)
                     .then( pro => {
                         res.status(201).json(pro)
                     })
