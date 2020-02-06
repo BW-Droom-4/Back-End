@@ -240,12 +240,6 @@ router.delete('/:user_id/experience/:id', authenticate, (req, res)=>{
 
     const { user_id, company_worked_for, employment_startdate, employment_enddate, experience_detail } = experienceData;
 
-    Users.getUserById(user_id)
-    .then(user => {
-        if(!user){
-            res.status(404).json({error: 'Failed to delete experience because no user with such id found'})
-        } 
-        else if (user) {
             Users.getUserExperienceById(id)
             .then (experience => {
                 if (!experience) {
@@ -346,12 +340,6 @@ router.delete('/:user_id/interest/:id', authenticate, (req, res)=>{
 
     const { user_id, interest_area} = interestData;
 
-    Users.getUserById(user_id)
-    .then(user => {
-        if(!user){
-            res.status(404).json({error: 'Failed to delete interest because no user with such id found'})
-        } 
-        else if (user) {
             Users.getUserInterestById(id)
             .then (interest => {
                 if (!interest) {
@@ -451,14 +439,6 @@ router.delete('/:user_id/profile/:id', authenticate, (req, res)=>{
     const profilesData = req.body
     const id = req.params.id
 
-    const { user_id, occupation_title, about_user, years_of_experience } = profilesData;
-
-    Users.getUserById(user_id)
-    .then(user => {
-        if(!user){
-            res.status(404).json({error: 'Failed to delete profile because no user with such id found'})
-        } 
-        else if (user) {
             Profiles.getUserProfileById(id)
             .then (pro => {
                 if (!pro) {
