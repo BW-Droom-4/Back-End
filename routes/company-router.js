@@ -239,12 +239,6 @@ router.delete('/:company_id/joblisting/:id', authenticate, (req, res)=>{
 
     const { company_id, job_title, expiry_date, job_detail, matching_skill} = joblistingData;
 
-    Companies.getCompanyById(company_id)
-    .then(company => {
-        if(!company){
-            res.status(404).json({error: 'Failed to delete experience because no company with such id found'})
-        } 
-        else if (company) {
             Companies.getJobListingById(id)
             .then (joblist => {
                 if (!joblist) {
@@ -346,12 +340,6 @@ router.delete('/:company_id/profile/:id', authenticate, (req, res)=>{
 
     const { company_id, sector, about_user, years_of_experience } = profilesData;
 
-    Companies.getCompanyById(company_id)
-    .then(company => {
-        if(!company){
-            res.status(404).json({error: 'Failed to delete profile because no company with such id found'})
-        } 
-        else if (company) {
             Profiles.getCompanyProfileById(id)
             .then (pro => {
                 if (!pro) {
