@@ -50,8 +50,9 @@ function getUserCompanyLikes() {
     .join('companylikeduser as cu', 'cu.user_id', 'u.id')
     .join('userlikedcompany as uc', 'uc.user_id', 'u.id')
     .select('uc.user_id', 'uc.company_id', 'uc.user_liked', 'cu.company_liked')
-    .where({'uc.user_liked': 'true', 'uc.user_liked': 1})
-    .andWhere({'cu.company_liked': 'true', 'cu.company_liked': '1'})
+    .where('uc.user_liked', '=', 'true',
+    'cu.company_liked', '=', 'true')
+    .orWhere({'uc.user_liked': '1', 'cu.company_liked': '1'})
 }
 
 
